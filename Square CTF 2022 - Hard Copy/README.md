@@ -1,5 +1,5 @@
 # Challenge: Hard Copy
-##Description
+## Description
 I printed a hard copy of the flag, but then I lost it. Will you help me recover it?
 * Category: crypto/rev
 * Points: 300
@@ -24,7 +24,7 @@ n=p*q
 
 Since we know that the difference between p and q is slightly more than 2^1021, we can essentially just solve a quadratic.
 
-Let $$r = \min(p,q)$$ and $$k = 2^{1021}.$$ Then, $$r(r+k) = n$$ gives $$(r+\frac k2)^2 = n + (\frac k2)^2$$, so $$r \approx \sqrt{n+\frac{k^2}{4}}-\frac k2$$.
+Let $r = \min(p,q)$ and $k = 2^{1021}.$ Then, $r(r+k) = n$ gives $\left(r+\frac k2\right)^2 = n + \left(\frac k2\right)^2$$, so $r \approx \sqrt{n+\frac{k^2}{4}}-\frac k2$.
 
 Here's the Python for it:
 ```py
