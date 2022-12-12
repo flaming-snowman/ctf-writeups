@@ -4,7 +4,7 @@ I printed a hard copy of the flag, but then I lost it. Will you help me recover 
 * Category: crypto/rev
 * Points: 300
 ## Comments
-This challenge is more forensics than anything else. It's a good demonstration of how an improper crypto implementation allows an attacker to intercept and decrypt traffic using Wireshark. The official writeup does a good job (go [read it](https://squarectf.com/2022/hardcopy.html)).
+This challenge is more forensics than anything else. It's a good demonstration of how an improper crypto implementation allows an attacker to intercept and decrypt traffic using Wireshark. The official writeup does a good job as well (go [read it](https://squarectf.com/2022/hardcopy.html)).
 ## My Solution
 ### Crypto/Rev Portion
 Everything in printer.go is pretty innocuous except for the RSA implementation. I wasn't familiar with Golang before this challenge, so I had to use the [docs](https://pkg.go.dev/math/big#Int) to figure out what was happening.
@@ -22,9 +22,9 @@ while(not cun.isPrime(q)):
 n=p*q
 ```
 
-Since we know that the difference between p and q is slightly more than 2^1021, we can essentially just solve a quadratic.
+Since we know that the difference between p and q is slightly more than $2^{1021}$, we can essentially just solve a quadratic.
 
-Let $r = \min(p,q)$ and $k = 2^{1021}.$ Then, $r(r+k) = n$ gives $\left(r+\frac k2\right)^2 = n + \left(\frac k2\right)^2$$, so $r \approx \sqrt{n+\frac{k^2}{4}}-\frac k2$.
+Let $r = \min(p,q)$ and $k = 2^{1021}.$ Then, $r(r+k) = n$ gives $\left(r+\frac k2\right)^2 = n + \left(\frac k2\right)^2$, so $r \approx \sqrt{n+\frac{k^2}{4}}-\frac k2$.
 
 Here's the Python for it:
 ```py
@@ -48,7 +48,7 @@ We need to recover the modulus from the PCAP. To do this, we open capture.pcap i
 
 ![extraction screenshot](./screenshots/extractcert.png "Screenshot of extracting hardcopy.cer")
 
-Extracting the certifcate into a .cer file, we can use openssl to read the details of the certificate: `openssl x509 -inform der -in hardcopy.cer -text`
+Extracting the certifcate into a [.cer file](./hardcopy.cer), we can use openssl to read the details of the certificate: `openssl x509 -inform der -in hardcopy.cer -text`
 
 We only care about the modulus, which we can easily recover with `openssl x509 -inform der -in hardcopy.cer -modulus`
 
